@@ -5,6 +5,7 @@ import React,{useState,useEffect} from 'react';
 import useMarvelService from '../../services/MarvelService';
 import Skeleton from '../skeleton/Skeleton'
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom'
 
 const  CharInfo = (props) => {
     const [char,setChar] = useState(null);
@@ -18,7 +19,6 @@ const  CharInfo = (props) => {
 
     const updateChar = () =>{
         const {charId} = props;
-
         if(!charId){
             return;
         }
@@ -55,9 +55,19 @@ const View = ({char}) =>{
     }
     // console.log(comics)
     const allComics = comics.map((item,i )=>{
+        let allUrl = []
+        allUrl.push(item.resourceURI)
+       let url = allUrl.map(item => {
+            let n = item.lastIndexOf('/');
+            let result = item.substring(n + 1);
+            return +result
+    });
+    console.log(url)
         return (
         <li className="char__comics-item" key={i}>
+            <Link to={`/comics/${url}`}>
             {item.name}
+            </Link>
         </li>
         )
     })
