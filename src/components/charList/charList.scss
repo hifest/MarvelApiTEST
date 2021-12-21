@@ -15,6 +15,7 @@
         row-gap: 30px;
     }
     &__item {
+        border-radius: 20px;
         width: 200px;
         height: 318px;
         background-color: $dark;
@@ -25,6 +26,7 @@
         img {
             width: 200px;
             height: 200px;
+            border-radius: 15px;
             object-fit: cover;
             transform: translate(-15px, -15px);
         }
@@ -41,3 +43,18 @@
         color: #fff;
     }
 }
+.my-node-enter {
+    transform:translateX(-100%) scale(0.8);
+
+  }
+  .my-node-enter-active {
+    transition: all 500ms;
+    transform:translateX(0%) scale(1);
+  }
+  .my-node-exit {
+    transition: all 500ms;
+  }
+  .my-node-exit-active {
+    transform:translateX(-100%) rotate(60deg);
+    transition: all 500mss;
+  }

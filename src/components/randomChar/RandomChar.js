@@ -4,18 +4,21 @@ import Error from '../errorMessage/ErrorMessage';
 import Spinner from '../spinner/Spinner'
 import { useState,useEffect } from 'react';
 import useMarvelService from '../../services/MarvelService';
+import { CSSTransition,TransitionGroup  } from 'react-transition-group';
 
 const  RandomChar = (props) => {
 const [char,setChar] = useState({});
-
+const [loadChar,setLoad] = useState(false)
 useEffect(()=>{
     randomChar()
+    // setLoad(true)
 },[]);
 
     const {loading,error,getCharacter,clearError} =  useMarvelService()
 
     const onCharLoaded = (char) =>{
         setChar(char)
+        setLoad(true)
     }
     const randomChar = () => {
         clearError()
@@ -26,13 +29,14 @@ useEffect(()=>{
 
     const newRandomChar = () =>{
         randomChar()
-   
+        setLoad(false)
     }
         const errorMessage = error ? <Error/> : null;
         const spinner = loading ? <Spinner/> : null;
-        const content = !(loading || error) ? <View char={char}/> : null;
+        const content = !(loading || error) ? <View char={char} /> : null;
 
         return (
+            <CSSTransition  in={loadChar} timeout={300} classNames="my-node1" >  
             <div className="randomchar">
                 {errorMessage}
                 {spinner}
@@ -51,18 +55,20 @@ useEffect(()=>{
                     <img src={mjolnir} alt="mjolnir" className="randomchar__decoration"/>
                 </div>
             </div>
+            </CSSTransition>
+          
         )
     }
 
 
-const View = ({char}) => {
+const View = ({char,load}) => {
     const {name,descr,thumbnail,homepage,wiki} = char
     let styleImg = {'objectFit' : 'cover'}
     if(thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg'){
         styleImg = {'objectFit' : 'contain'}
     }
-    return(
-        <div className="randomchar__block">
+    return(  
+            <div className="randomchar__block">
         <img src={thumbnail} alt="Random character" className="randomchar__img" style={styleImg}/>
         <div className="randomchar__info">
             <p className="randomchar__name">{name}</p>
@@ -79,6 +85,7 @@ const View = ({char}) => {
             </div>
         </div>
     </div>
+   
     )
 }
 

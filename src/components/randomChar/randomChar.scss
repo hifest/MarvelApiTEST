@@ -1,6 +1,7 @@
 @import '../../style/variables.scss';
 
 .randomchar {
+    border-radius: 20px;
     display: grid;
     grid-template-columns: repeat(2, 50%);
     box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.25);
@@ -37,6 +38,7 @@
         }
     }
     &__static {
+        border-radius: 20px;
         padding: 40px 35px;
         background-color: $dark;
         position: relative;
@@ -60,3 +62,18 @@
         right: -37px;
     }
 }
+.my-node1-enter {
+    opacity: 0;
+
+  }
+  .my-node1-enter-active {
+    transition: all 500ms;
+    opacity: 1;
+  }
+  .my-node1-exit {
+    transition: all 500ms;
+  }
+  .my-node1-exit-active {
+    opacity: 1;
+    transition: all 500ms;
+  }

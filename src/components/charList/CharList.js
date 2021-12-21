@@ -3,6 +3,7 @@ import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import useMarvelService from '../../services/MarvelService';
 import PropTypes from 'prop-types';
+import { CSSTransition,TransitionGroup  } from 'react-transition-group';
 import './charList.scss';
 
 const CharList = (props) => {
@@ -59,38 +60,41 @@ const CharList = (props) => {
             }
             
             return (
-                <li 
-                    className="char__item"
-                    key={item.id}
-                    ref = {el => itemRefs.current[i] = el}
-                    onClick={()=>{ 
-                        props.onCharSelected(item.id)
-                        onFocusItem(i)
-                    }} 
-                    onKeyPress={(e) => {
-                        if (e.key === ' ' || e.key === "Enter") {
-                            props.onCharSelected(item.id);
-                            onFocusItem(i);
-                        }
-                    }}>
-                    
-                        <img src={item.thumbnail} alt={item.name} style={imgStyle}/>
-                        <div className="char__name">{item.name}</div>
-                </li>
+                <CSSTransition  timeout={300} classNames="my-node" >
+                    <li 
+                        className="char__item"
+                        key={item.id}
+                        ref = {el => itemRefs.current[i] = el}
+                        onClick={()=>{ 
+                            props.onCharSelected(item.id)
+                            onFocusItem(i)
+                        }} 
+                        onKeyPress={(e) => {
+                            if (e.key === ' ' || e.key === "Enter") {
+                                props.onCharSelected(item.id);
+                                onFocusItem(i);
+                            }
+                        }}>
+                        
+                            <img src={item.thumbnail} alt={item.name} style={imgStyle}/>
+                            <div className="char__name">{item.name}</div>
+                    </li>
+                </CSSTransition>
             )
         });
         // А эта конструкция вынесена для центровки спиннера/ошибки
         return (
             <ul className="char__grid">
-                
+                <TransitionGroup component={null}>
                 {items}
+                </TransitionGroup>
+                
             </ul>
         )
     }
 
         
         const items = renderItems(charList);
-
         const errorMessage = error ? <ErrorMessage/> : null;
         const spinner = loading && !newItem ? <Spinner/> : null;
         // const content = !(loading || error) ? items : null;

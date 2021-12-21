@@ -4,6 +4,7 @@ import React,{useState,useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
+import { CSSTransition,TransitionGroup  } from 'react-transition-group';
 const ComicsList = () => {
     const [comics,setComics] = useState([])
     const [offset,setOffset] = useState(7891)
@@ -32,19 +33,24 @@ const ComicsList = () => {
     function renderItems(arr) {
         const items =  arr.map((item,i) => {
             return (
-                <li className="comics__item" key={item.id}>
-                    <Link to={`/comics/${item.id}`}>
-                    <img src={item.thumbnail} alt={item.title} className="comics__item-img"/>
-                    <div className="comics__item-name">{item.title}</div>
-                    <div className="comics__item-price">{item.price}$</div>
-                    </Link>
-                </li>
+                <CSSTransition  timeout={500} classNames="my-node">
+                    <li className="comics__item" key={item.id}>
+                        <Link to={`/comics/${item.id}`}>
+                        <img src={item.thumbnail} alt={item.title} className="comics__item-img"/>
+                        <div className="comics__item-name">{item.title}</div>
+                        <div className="comics__item-price">{item.price}$</div>
+                        </Link>
+                    </li>
+                </CSSTransition>
             )
         });
         // А эта конструкция вынесена для центровки спиннера/ошибки
         return (
             <ul className="comics__grid">
-                {items}
+                <TransitionGroup component={null}>
+                    {items}
+                </TransitionGroup>
+                
             </ul>
         )
     }
@@ -53,9 +59,9 @@ const ComicsList = () => {
     const spinner = loading ? <Spinner/> : null;
     return (
         <div className="comics__list">
-    {items}
-    {spinner}
-    {errorMessage}
+                {items}
+                {spinner}
+                {errorMessage}
             <button 
             onClick={()=>getComics(offset)}
             style={{'display' : ComicEnded ? 'none' : 'block'}}

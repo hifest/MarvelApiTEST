@@ -34,3 +34,21 @@
         }
     }
 }
+.my-node-enter {
+    transform: scale(0.1) rotate(60deg);
+    
+  }
+  .my-node-enter-active {
+    transition: all 500ms;
+    transform: scale(1) rotate(0deg);
+  }
+  .my-node-exit {
+    transition: all 500ms;
+  }
+  .my-node-exit-active {
+    transform: rotate(60deg);
+    transition: all 500ms;
+  }
+
+  
+  
