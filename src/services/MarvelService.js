@@ -1,4 +1,4 @@
- import {useHttp} from '../hooks/http.hook'
+import {useHttp} from '../hooks/http.hook'
 
 const  useMarvelService = () => {
 
@@ -25,6 +25,10 @@ const  useMarvelService = () => {
       const res = await request(`${_apiBase}comics/${id}?${_apiKey}`);
       return _transformComics(res.data.results[0]);
   }
+const getCharacterByName = async (name) => {
+   const res = await request(`${_apiBase}characters?name=${name}&${_apiKey}`);
+   return res.data.results.map(_transformCharacter);
+}
     const _transformCharacter = (char) =>{
       return {
          id: char.id,
@@ -49,7 +53,7 @@ const  useMarvelService = () => {
          }
    };
     return {
-       loading,error,getAllCharactres,getCharacter,clearError,getAllComics,getComic
+       loading,error,getAllCharactres,getCharacter,clearError,getAllComics,getComic,getCharacterByName
     }
  }
 

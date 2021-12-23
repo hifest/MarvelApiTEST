@@ -1,9 +1,9 @@
 import ErrorMessage from "../errorMessage/ErrorMessage";
-import {Link,useLocation,useNavigate} from 'react-router-dom';
+import {Link,useNavigate ,useLocation} from 'react-router-dom';
 const Page404 = () =>{
     let location = useLocation();
-    let history = useNavigate ();
-    console.log(history)
+    let navigate = useNavigate();
+    console.log(location)
     return (
         <div>
             <ErrorMessage></ErrorMessage>
@@ -13,9 +13,7 @@ const Page404 = () =>{
             <Link to="/" style={{'color': 'purple','fontSize' : '34px', 'textAlign': 'center', 'display' : 'block','marginTop' : '15px'}}>
                 This button will take you back to the home page
             </Link>
-        {/* <Link type="button" onClick={() => history(-1)} style={{'color': 'dark','fontSize' : '34px', 'textAlign': 'center', 'display' : 'block', 'margin' :'0 auto', 'fontWeight':'bold', 'marginTop' : '15px'}}>
-            This button will take you back to where you were
-        </Link> */}
+            <button style={{'color': 'purple','fontSize' : '34px', 'textAlign': 'center', 'display' : 'block','margin' : '0'}} onClick={() => navigate(-1) }>Go back</button>
         </div>
     )
 }

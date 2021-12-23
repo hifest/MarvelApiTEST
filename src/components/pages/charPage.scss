@@ -1,0 +1,36 @@
+.single{
+    &-char{
+        display: grid;
+        grid-template-columns: 293px 550px auto;
+        column-gap: 50px;
+        &__name{
+            margin-bottom: 25px;
+            font-size: 28px;
+            line-height: 21px;
+        }
+        &__descr{
+            font-size: 18px;
+            line-height: 21px;
+        }
+    }
+}
+img{
+    max-width: 290px;
+    max-height: 290px;
+}
+.my-node1-enter {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  .my-node1-enter-active {
+    transition: all 500ms;
+    opacity: 1;
+    transform: scale(1);
+  }
+  .my-node1-exit {
+    transition: all 500ms;
+  }
+  .my-node1-exit-active {
+    opacity: 1;
+    transition: all 500ms;
+  }

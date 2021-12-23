@@ -65,7 +65,7 @@ const View = ({char}) =>{
     console.log(url)
         return (
         <li className="char__comics-item" key={i}>
-            <Link to={`/comics/${url}`}>
+            <Link to={`comics/${url}`}>
             {item.name}
             </Link>
         </li>

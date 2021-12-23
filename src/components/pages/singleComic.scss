@@ -37,3 +37,21 @@
         }
     }
 }
+.my-comic-enter {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  .my-comic-enter-active {
+    transition: all 500ms;
+    opacity: 1;
+    transform: scale(1);
+  }
+  .my-comic-exit {
+    transition: all 500ms;
+    opacity: 1;
+    
+  }
+  .my-comic-exit-active {
+    transform: rotate(60deg);
+    transition: all 500mss;
+  }
