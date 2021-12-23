@@ -3,7 +3,7 @@ import CharList from "../charList/CharList";
 import CharInfo from "../charInfo/CharInfo";
 import ErrorBoundary from "../errorBoundary/ErrorBoundary";
 import decoration from '../../resources/img/vision.png';
-import CharSeacrh from "../CharSerch/CharSearch";
+import SearchChar from "../SearchCharPanel/SearchChar";
 import {useState} from 'react';
 
 const MainPage = () =>{
@@ -28,7 +28,7 @@ const MainPage = () =>{
                     <CharInfo charId = {selectChar} />
             </ErrorBoundary>
             <ErrorBoundary>
-                    <CharSeacrh></CharSeacrh>
+                    <SearchChar />
             </ErrorBoundary>
         </div>
         </div>

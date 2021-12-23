@@ -64,10 +64,11 @@
 }
 .my-node1-enter {
     opacity: 0;
-
+    transform: scale(0.3);
   }
   .my-node1-enter-active {
     transition: all 500ms;
+    transform: scale(1);
     opacity: 1;
   }
   .my-node1-exit {

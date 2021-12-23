@@ -9,7 +9,7 @@ const Page404 = lazy(()=>import("../pages/404"))
 const MainPage = lazy(()=>import("../pages/MainPage"))
 const ComicsPage = lazy(()=>import("../pages/ComicsPage"))
 const SingleComicsPage = lazy(()=>import("../pages/SingleComicsPage"))
-const SingleCharPage = lazy(()=>import("../pages/CharPage"))
+const CharPage = lazy(()=>import ('../pages/CharPage'))
 const  App = () => {
     return (
 
@@ -28,10 +28,9 @@ const  App = () => {
 
                             <Route  path="/comics/:comicID" element={<SingleComicsPage/>}>
                             </Route>
-                            <Route  path="/characters/:Id" element={<SingleCharPage/>} >
-                            
-                                    
+                            <Route  path="/characters/:charID" element={<CharPage/>}>
                             </Route>
+
                             <Route path="*" element={<Page404></Page404>}>
                             </Route>
                         </Routes>
