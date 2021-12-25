@@ -1,15 +1,12 @@
 import {lazy,Suspense} from 'react'
 
 import AppHeader from "../appHeader/AppHeader";
-import AppBanner from "../appBanner/AppBanner";
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Spinner from '../spinner/Spinner';
-import { CSSTransition,TransitionGroup  } from 'react-transition-group';
 const Page404 = lazy(()=>import("../pages/404"))
 const MainPage = lazy(()=>import("../pages/MainPage"))
 const ComicsPage = lazy(()=>import("../pages/ComicsPage"))
-const SingleComicsPage = lazy(()=>import("../pages/SingleComicsPage"))
-const CharPage = lazy(()=>import ('../pages/CharPage'))
+const SinglePage = lazy(()=>import('../pages/SinglePage'))
 const  App = () => {
     return (
 
@@ -26,9 +23,9 @@ const  App = () => {
                             <Route  path="/comics" element={<ComicsPage/>}>
                             </Route>
 
-                            <Route  path="/comics/:comicID" element={<SingleComicsPage/>}>
+                            <Route  path="/comics/:id" element={<SinglePage  dataType='comic'/>}>
                             </Route>
-                            <Route  path="/characters/:charID" element={<CharPage/>}>
+                            <Route  path="/characters/:id" element={<SinglePage  dataType='character'/>}>
                             </Route>
 
                             <Route path="*" element={<Page404></Page404>}>

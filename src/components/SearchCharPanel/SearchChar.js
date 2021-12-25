@@ -40,7 +40,7 @@ return(
             charName: ''
         }}
         validationSchema={Yup.object({
-            charName: Yup.string('charName').min(2,'Минимум 2 символа!').required('Обезательное поле!')
+            charName: Yup.string().min(2,'Минимум 2 символа!').required('Обезательное поле!')
         })}
         onSubmit = {({charName})=>{
             updateChar(charName)

@@ -38,20 +38,61 @@
     }
 }
 .my-comic-enter {
-    transform: scale(0.8);
     opacity: 0;
+    transform: scale(0.3) rotate(15deg);
+    
   }
   .my-comic-enter-active {
     transition: all 500ms;
     opacity: 1;
-    transform: scale(1);
+    transform: scale(1) rotate(0deg);
   }
   .my-comic-exit {
     transition: all 500ms;
-    opacity: 1;
-    
   }
   .my-comic-exit-active {
-    transform: rotate(60deg);
-    transition: all 500mss;
+    opacity: 1;
+    transition: all 500ms;
+  }
+  .single{
+    &-char{
+      margin-top: 50px;
+        display: grid;
+        grid-template-columns: 293px 550px auto;
+        column-gap: 50px;
+        &__descr{
+
+            font-size: 18px;
+            margin-top: 25px;
+        }
+        &__name{
+            font-weight:bold;
+            font-size: 28px;
+            color: #000000;
+        }
+    }
+}
+img{
+    max-width: 290px;
+    max-height: 290px;
+}
+.link-back{
+    color: rgba(255, 0, 0, 0.699);
+    font-weight:bold;
+}
+.my-char-enter {
+    opacity: 0;
+    transform: scale(0.3) rotate(15deg);
+  }
+  .my-char-enter-active {
+    transition: all 500ms;
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  .my-char-exit {
+    transition: all 500ms;
+  }
+  .my-char-exit-active {
+    opacity: 1;
+    transition: all 500ms;
   }
