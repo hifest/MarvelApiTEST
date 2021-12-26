@@ -5,12 +5,31 @@ import {Link} from 'react-router-dom';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import { CSSTransition,TransitionGroup  } from 'react-transition-group';
+const setContent  = (process,Component,newItemLoading) =>{
+    switch(process){
+        case 'waiting': 
+            return <Spinner></Spinner>;
+            break;
+        case 'loading': 
+            return newItemLoading ? <Component></Component> :  <Spinner></Spinner>;
+            break;
+        case 'confirmed':
+            return <Component/>;
+            break;
+        case 'error' :
+            return <ErrorMessage></ErrorMessage>;
+            break;
+        default:
+            throw new Error("ФАК МАШИНА")
+    }
+};
 const ComicsList = () => {
     const [comics,setComics] = useState([])
     const [offset,setOffset] = useState(7891)
     const [newItemLoading, setnewItemLoading] = useState(false);
     const [ComicEnded,setComicsEnded] = useState(false)
-    const {loading,error,clearError,getAllComics} =  useMarvelService()
+
+    const {clearError,getAllComics,process,setProcess} =  useMarvelService()
     useEffect(()=>{
         getComics(offset, true);
     },[]);
@@ -19,6 +38,7 @@ const ComicsList = () => {
         initial ? setnewItemLoading(false) : setnewItemLoading(true);
         getAllComics(offset)
         .then(onComicLoaded)
+        .then(setProcess(()=> 'confirmed'))
     }
 
     const onComicLoaded = (newComics) =>{
@@ -54,14 +74,9 @@ const ComicsList = () => {
             </ul>
         )
     }
-    const items = renderItems(comics);
-    const errorMessage = error ? <ErrorMessage/> : null;
-    const spinner = loading ? <Spinner/> : null;
     return (
         <div className="comics__list">
-                {items}
-                {spinner}
-                {errorMessage}
+                {setContent(process, () => renderItems(comics), newItemLoading)}
             <button 
             onClick={()=>getComics(offset)}
             style={{'display' : ComicEnded ? 'none' : 'block'}}

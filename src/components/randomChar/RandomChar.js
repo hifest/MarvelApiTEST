@@ -1,10 +1,9 @@
 import './randomChar.scss';
 import mjolnir from '../../resources/img/mjolnir.png';
-import Error from '../errorMessage/ErrorMessage';
-import Spinner from '../spinner/Spinner'
 import { useState,useEffect } from 'react';
 import useMarvelService from '../../services/MarvelService';
-import { CSSTransition,TransitionGroup  } from 'react-transition-group';
+import { CSSTransition  } from 'react-transition-group';
+import setContent from '../../utils/setContent';
 
 const  RandomChar = (props) => {
 const [char,setChar] = useState({});
@@ -14,33 +13,31 @@ useEffect(()=>{
     // setLoad(true)
 },[]);
 
-    const {loading,error,getCharacter,clearError} =  useMarvelService()
+    const {loading,error,getCharacter,clearError,process,setProcess} =  useMarvelService()
 
     const onCharLoaded = (char) =>{
         setChar(char)
         setLoad(true)
+
     }
     const randomChar = () => {
         clearError()
         const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
             getCharacter(id)
             .then(onCharLoaded)
+            .then(setProcess(()=> 'confirmed'))
     }
 
     const newRandomChar = () =>{
         randomChar()
         setLoad(false)
     }
-        const errorMessage = error ? <Error/> : null;
-        const spinner = loading ? <Spinner/> : null;
-        const content = !(loading || error) ? <View char={char} /> : null;
+
 
         return (
             <CSSTransition  in={loadChar} timeout={300} classNames="my-node1" >  
             <div className="randomchar">
-                {errorMessage}
-                {spinner}
-                {content}
+                 {setContent(process,View,char)}
                 <div className="randomchar__static">
                     <p className="randomchar__title">
                         Random character for today!<br/>
@@ -61,8 +58,8 @@ useEffect(()=>{
     }
 
 
-const View = ({char,load}) => {
-    const {name,descr,thumbnail,homepage,wiki} = char
+const View = ({data,load}) => {
+    const {name,descr,thumbnail,homepage,wiki} = data
     let styleImg = {'objectFit' : 'cover'}
     if(thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg'){
         styleImg = {'objectFit' : 'contain'}

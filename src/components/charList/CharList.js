@@ -5,7 +5,25 @@ import useMarvelService from '../../services/MarvelService';
 import PropTypes from 'prop-types';
 import { CSSTransition,TransitionGroup  } from 'react-transition-group';
 import './charList.scss';
-
+// import setContent from '../../utils/setContent';
+const setContent  = (process,Component,newItem) =>{
+    switch(process){
+        case 'waiting': 
+            return <Spinner></Spinner>;
+            break;
+        case 'loading': 
+            return newItem ? <Component></Component> :  <Spinner></Spinner>;
+            break;
+        case 'confirmed':
+            return <Component/>;
+            break;
+        case 'error' :
+            return <ErrorMessage></ErrorMessage>;
+            break;
+        default:
+            throw new Error("ФАК МАШИНА")
+    }
+};
 const CharList = (props) => {
 
     const [charList,setCharList] = useState([])
@@ -13,16 +31,17 @@ const CharList = (props) => {
     const [offset,setOffset] = useState(250)
     const [charEnded,setCharEnded] = useState(false)
 
-    const {loading,error,getAllCharactres} =  useMarvelService();
+    const {getAllCharactres,process,setProcess} =  useMarvelService();
 
-    useEffect(()=>{
+    useEffect(() => {
         onRequest(offset, true);
-    },[]);
+    }, [])
 
     const onRequest = (offset,initial) =>{
         initial ? setNewItem(false) : setNewItem(true)
         getAllCharactres(offset)
         .then(onCharListLoaded)
+        .then(setProcess(()=> 'confirmed'))
     }
 
     const onCharListLoaded = (newCharList) => {
@@ -32,7 +51,7 @@ const CharList = (props) => {
         }
 
         setCharList(charList => [...charList,...newCharList]);
-        setNewItem(newItem => false);
+        setNewItem(false);
         setOffset(offset => offset + 9);
         setCharEnded(charEnded => ended)
 
@@ -93,18 +112,14 @@ const CharList = (props) => {
         )
     }
 
-        
-        const items = renderItems(charList);
-        const errorMessage = error ? <ErrorMessage/> : null;
-        const spinner = loading && !newItem ? <Spinner/> : null;
-        // const content = !(loading || error) ? items : null;
+    
+
 
         return (
             <div className="char__list">
-                {errorMessage}
-                {spinner}
-                {items}
+                {setContent(process,()=>renderItems(charList),newItem)}
                 <button 
+                disabled={newItem} 
                 className="button button__main button__long"
                 // disabled={newItemLoading}
                 style = {{'display' : charEnded ? 'none' : 'block'}}
